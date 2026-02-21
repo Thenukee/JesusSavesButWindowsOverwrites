@@ -21,12 +21,31 @@ title: Home
 
     <!-- Real content -->
     <div class="content-wrapper">
-      <h1>Hi, I'm <span class="accent">{{ site.author.name }}</span></h1>
-      <p class="subtitle">{{ site.description }}</p>
+      <div class="hero-terminal">
+        <span class="prompt">$</span> whoami
+      </div>
+      <h1>I'm <span class="gradient-text">{{ site.author.name }}</span></h1>
+      <p class="subtitle">
+        <span id="typed-text" data-phrases="{{ site.description | replace: ' | ', '|' }}"></span><span class="typed-cursor"></span>
+      </p>
       <div class="hero-buttons">
         <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">Read Blog</a>
         <a href="{{ '/projects/' | relative_url }}" class="btn btn-outline">View Projects</a>
-        <a href="{{ '/contact/' | relative_url }}" class="btn btn-glass">Contact</a>
+        <a href="{{ '/contact/' | relative_url }}" class="btn btn-glass">Get in Touch</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <span class="stat-number">{{ site.posts.size }}</span>
+          <span class="stat-label">Posts</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-number">{{ site.projects.size }}</span>
+          <span class="stat-label">Projects</span>
+        </div>
+        <div class="hero-stat">
+          <span class="stat-number">{{ site.data.certs_count | default: '3+' }}</span>
+          <span class="stat-label">Certs</span>
+        </div>
       </div>
     </div>
   </div>
@@ -83,25 +102,25 @@ title: Home
 <section class="section">
   <div class="container">
     <div class="highlight-grid">
-      <div class="highlight-card glass fade-in">
-        <span class="icon">🔬</span>
+      <div class="highlight-card glass fade-in glow-pulse">
+        <span class="icon">🛡️</span>
         <h4>Research</h4>
-        <p>Peace & conflict studies, cybersecurity research, and academic writing</p>
+        <p>Cybersecurity, digital forensics, and human rights research</p>
       </div>
-      <div class="highlight-card glass fade-in">
-        <span class="icon">💻</span>
+      <div class="highlight-card glass fade-in glow-pulse">
+        <span class="icon">⚡</span>
         <h4>Projects</h4>
-        <p>Tools and applications built for security, forensics, and data analysis</p>
+        <p>Security tools, forensic utilities, and open-source contributions</p>
       </div>
-      <div class="highlight-card glass fade-in">
-        <span class="icon">🏅</span>
+      <div class="highlight-card glass fade-in glow-pulse">
+        <span class="icon">🎯</span>
         <h4>Certifications</h4>
-        <p>Professional certifications in cybersecurity and related fields</p>
+        <p>Industry certifications in cybersecurity and networking</p>
       </div>
-      <div class="highlight-card glass fade-in">
-        <span class="icon">📄</span>
+      <div class="highlight-card glass fade-in glow-pulse">
+        <span class="icon">📋</span>
         <h4>CV</h4>
-        <p>Full academic and professional background</p>
+        <p>Full academic and professional credentials</p>
       </div>
     </div>
   </div>

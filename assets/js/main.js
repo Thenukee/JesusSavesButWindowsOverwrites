@@ -1,6 +1,6 @@
 /* ============================================================
-   main.js — Dark mode, skeleton loading, search, tag filter,
-             scroll animations, mobile nav, reading time
+   main.js — Dark mode, particle canvas, typing effect,
+             skeleton loading, search, tag filter, scroll anims
    ============================================================ */
 
 (function () {
@@ -24,11 +24,9 @@
     if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
   }
 
-  // Apply immediately to avoid flash
   applyTheme(getPreferredTheme());
 
   document.addEventListener('DOMContentLoaded', function () {
-    // Re-apply to make sure toggle icon is set
     applyTheme(getPreferredTheme());
 
     const toggle = document.querySelector('.theme-toggle');
@@ -37,6 +35,157 @@
         const current = document.documentElement.getAttribute('data-theme');
         applyTheme(current === 'dark' ? 'light' : 'dark');
       });
+    }
+
+    // -----------------------------------------------------------
+    // PARTICLE CANVAS (connecting dots background)
+    // -----------------------------------------------------------
+    const canvas = document.getElementById('particle-canvas');
+    if (canvas) {
+      const ctx = canvas.getContext('2d');
+      let particles = [];
+      let animId;
+      const PARTICLE_COUNT = 60;
+      const CONNECTION_DIST = 120;
+      let mouse = { x: null, y: null };
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+      }
+
+      function createParticles() {
+        particles = [];
+        for (let i = 0; i < PARTICLE_COUNT; i++) {
+          particles.push({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.5,
+            vy: (Math.random() - 0.5) * 0.5,
+            r: Math.random() * 2 + 1
+          });
+        }
+      }
+
+      function drawParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
+        const dotColor = isDark ? 'rgba(0, 212, 255, 0.5)' : 'rgba(0, 180, 220, 0.25)';
+        const lineColor = isDark ? 'rgba(0, 212, 255, 0.08)' : 'rgba(0, 180, 220, 0.06)';
+
+        for (let i = 0; i < particles.length; i++) {
+          const p = particles[i];
+          p.x += p.vx;
+          p.y += p.vy;
+
+          if (p.x < 0 || p.x > canvas.width) p.vx *= -1;
+          if (p.y < 0 || p.y > canvas.height) p.vy *= -1;
+
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2);
+          ctx.fillStyle = dotColor;
+          ctx.fill();
+
+          // Connections
+          for (let j = i + 1; j < particles.length; j++) {
+            const q = particles[j];
+            const dx = p.x - q.x;
+            const dy = p.y - q.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < CONNECTION_DIST) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(q.x, q.y);
+              ctx.strokeStyle = lineColor;
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+
+          // Mouse interaction
+          if (mouse.x !== null) {
+            const dx = p.x - mouse.x;
+            const dy = p.y - mouse.y;
+            const dist = Math.sqrt(dx * dx + dy * dy);
+            if (dist < 150) {
+              ctx.beginPath();
+              ctx.moveTo(p.x, p.y);
+              ctx.lineTo(mouse.x, mouse.y);
+              ctx.strokeStyle = isDark ? 'rgba(168, 85, 247, 0.15)' : 'rgba(168, 85, 247, 0.08)';
+              ctx.lineWidth = 0.5;
+              ctx.stroke();
+            }
+          }
+        }
+
+        animId = requestAnimationFrame(drawParticles);
+      }
+
+      resize();
+      createParticles();
+      drawParticles();
+
+      window.addEventListener('resize', function () {
+        resize();
+        createParticles();
+      });
+
+      window.addEventListener('mousemove', function (e) {
+        mouse.x = e.clientX;
+        mouse.y = e.clientY;
+      });
+
+      window.addEventListener('mouseout', function () {
+        mouse.x = null;
+        mouse.y = null;
+      });
+    }
+
+    // -----------------------------------------------------------
+    // TYPING EFFECT
+    // -----------------------------------------------------------
+    const typedEl = document.getElementById('typed-text');
+    if (typedEl) {
+      const phrases = typedEl.dataset.phrases
+        ? typedEl.dataset.phrases.split('|')
+        : ['Cybersecurity', 'Forensics', 'Human Rights'];
+      let phraseIdx = 0;
+      let charIdx = 0;
+      let deleting = false;
+      let pauseTimer = 0;
+      const TYPE_SPEED = 80;
+      const DELETE_SPEED = 40;
+      const PAUSE = 2000;
+
+      function typeLoop() {
+        const current = phrases[phraseIdx];
+
+        if (!deleting) {
+          typedEl.textContent = current.substring(0, charIdx + 1);
+          charIdx++;
+          if (charIdx === current.length) {
+            deleting = true;
+            pauseTimer = PAUSE;
+          }
+        } else {
+          typedEl.textContent = current.substring(0, charIdx - 1);
+          charIdx--;
+          if (charIdx === 0) {
+            deleting = false;
+            phraseIdx = (phraseIdx + 1) % phrases.length;
+          }
+        }
+
+        let delay = deleting ? DELETE_SPEED : TYPE_SPEED;
+        if (pauseTimer > 0) {
+          delay = pauseTimer;
+          pauseTimer = 0;
+        }
+
+        setTimeout(typeLoop, delay);
+      }
+
+      typeLoop();
     }
 
     // -----------------------------------------------------------
@@ -62,7 +211,6 @@
         navToggle.textContent = isOpen ? '✕' : '☰';
       });
 
-      // Close on link click (mobile)
       navLinks.querySelectorAll('a').forEach(function (link) {
         link.addEventListener('click', function () {
           navLinks.classList.remove('open');
@@ -77,8 +225,10 @@
     // -----------------------------------------------------------
     const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
     document.querySelectorAll('.nav-links a').forEach(function (link) {
-      const href = link.getAttribute('href').replace(/\/$/, '') || '/';
-      if (currentPath === href || (href !== '/' && currentPath.startsWith(href))) {
+      const href = link.getAttribute('href');
+      if (!href) return;
+      const normalised = href.replace(/\/$/, '') || '/';
+      if (currentPath === normalised || (normalised !== '/' && currentPath.startsWith(normalised))) {
         link.classList.add('active');
       }
     });
@@ -95,13 +245,12 @@
       });
     }
 
-    // Simulate short loading delay for skeleton effect
     setTimeout(removeSkeleton, 600);
 
     // -----------------------------------------------------------
-    // SCROLL FADE-IN ANIMATIONS
+    // SCROLL ANIMATIONS (fade-in, slide-in-left, scale-in)
     // -----------------------------------------------------------
-    const faders = document.querySelectorAll('.fade-in');
+    const animEls = document.querySelectorAll('.fade-in, .slide-in-left, .scale-in');
     if ('IntersectionObserver' in window) {
       const observer = new IntersectionObserver(function (entries) {
         entries.forEach(function (entry) {
@@ -112,10 +261,9 @@
         });
       }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
 
-      faders.forEach(function (el) { observer.observe(el); });
+      animEls.forEach(function (el) { observer.observe(el); });
     } else {
-      // Fallback
-      faders.forEach(function (el) { el.classList.add('visible'); });
+      animEls.forEach(function (el) { el.classList.add('visible'); });
     }
 
     // -----------------------------------------------------------
@@ -152,7 +300,6 @@
     if (tagFilters.length && postCards.length) {
       tagFilters.forEach(function (btn) {
         btn.addEventListener('click', function () {
-          // Toggle active
           tagFilters.forEach(function (b) { b.classList.remove('active'); });
           this.classList.add('active');
 
@@ -170,14 +317,13 @@
             noResults.style.display = visibleCount === 0 ? 'block' : 'none';
           }
 
-          // Clear search
           if (searchInput) searchInput.value = '';
         });
       });
     }
 
     // -----------------------------------------------------------
-    // READING TIME (auto-calculate on post pages)
+    // READING TIME
     // -----------------------------------------------------------
     const postContent = document.querySelector('.post-content');
     const readingTimeEl = document.getElementById('reading-time');
@@ -188,7 +334,7 @@
     }
 
     // -----------------------------------------------------------
-    // TABLE OF CONTENTS (auto-generate on post pages)
+    // TABLE OF CONTENTS (auto-generate)
     // -----------------------------------------------------------
     const tocContainer = document.getElementById('toc-list');
     if (postContent && tocContainer) {
@@ -206,7 +352,8 @@
           li.appendChild(a);
           tocContainer.appendChild(li);
         });
-        document.getElementById('toc')?.style.removeProperty('display');
+        var tocEl = document.getElementById('toc');
+        if (tocEl) tocEl.style.removeProperty('display');
       }
     }
 
@@ -215,7 +362,7 @@
     // -----------------------------------------------------------
     document.querySelectorAll('a[href^="#"]').forEach(function (anchor) {
       anchor.addEventListener('click', function (e) {
-        const target = document.querySelector(this.getAttribute('href'));
+        var target = document.querySelector(this.getAttribute('href'));
         if (target) {
           e.preventDefault();
           target.scrollIntoView({ behavior: 'smooth', block: 'start' });
