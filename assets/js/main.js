@@ -45,8 +45,8 @@
       const ctx = canvas.getContext('2d');
       let particles = [];
       let animId;
-      const PARTICLE_COUNT = 60;
-      const CONNECTION_DIST = 120;
+      const PARTICLE_COUNT = 70;
+      const CONNECTION_DIST = 130;
       let mouse = { x: null, y: null };
 
       function resize() {
@@ -60,18 +60,44 @@
           particles.push({
             x: Math.random() * canvas.width,
             y: Math.random() * canvas.height,
-            vx: (Math.random() - 0.5) * 0.5,
-            vy: (Math.random() - 0.5) * 0.5,
-            r: Math.random() * 2 + 1
+            vx: (Math.random() - 0.5) * 0.6,
+            vy: (Math.random() - 0.5) * 0.6,
+            r: Math.random() * 2 + 0.8
           });
         }
       }
 
+      // Occasional glitch frame counter
+      let glitchFrame = 0;
+
       function drawParticles() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
         const isDark = document.documentElement.getAttribute('data-theme') === 'dark';
-        const dotColor = isDark ? 'rgba(0, 212, 255, 0.5)' : 'rgba(0, 180, 220, 0.25)';
-        const lineColor = isDark ? 'rgba(0, 212, 255, 0.08)' : 'rgba(0, 180, 220, 0.06)';
+        
+        // Random glitch: every ~300 frames, briefly shift colors
+        glitchFrame++;
+        const isGlitch = glitchFrame % 300 < 3;
+        
+        const dotColor = isGlitch
+          ? 'rgba(97, 255, 131, 0.9)'
+          : isDark ? 'rgba(0, 212, 255, 0.5)' : 'rgba(0, 180, 220, 0.25)';
+        const lineColor = isGlitch
+          ? 'rgba(97, 255, 131, 0.2)'
+          : isDark ? 'rgba(0, 212, 255, 0.08)' : 'rgba(0, 180, 220, 0.06)';
+        
+        // Occasional random hex characters drawn on canvas
+        if (isDark && Math.random() < 0.02) {
+          const chars = '01ABCDEFabcdef{}[];:';
+          ctx.font = '10px JetBrains Mono, monospace';
+          ctx.fillStyle = 'rgba(97, 255, 131, 0.06)';
+          for (let k = 0; k < 3; k++) {
+            ctx.fillText(
+              chars[Math.floor(Math.random() * chars.length)],
+              Math.random() * canvas.width,
+              Math.random() * canvas.height
+            );
+          }
+        }
 
         for (let i = 0; i < particles.length; i++) {
           const p = particles[i];

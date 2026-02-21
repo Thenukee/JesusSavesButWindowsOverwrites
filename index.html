@@ -14,7 +14,6 @@ title: Home
         <div style="display:flex;gap:1rem;margin-top:0.5rem;">
           <div class="skeleton skeleton-btn"></div>
           <div class="skeleton skeleton-btn"></div>
-          <div class="skeleton skeleton-btn"></div>
         </div>
       </div>
     </div>
@@ -22,29 +21,28 @@ title: Home
     <!-- Real content -->
     <div class="content-wrapper">
       <div class="hero-terminal">
-        <span class="prompt">$</span> cat ~/readme.md
+        <span class="prompt">root@kdu</span><span class="prompt-sep">:</span><span class="prompt-path">~</span><span class="prompt-dollar">$</span> cat /etc/motd
       </div>
-      <h1>Hey, I'm <span class="gradient-text">{{ site.author.name }}</span></h1>
+      <h1>Hey, I'm <span class="gradient-text" data-text="{{ site.author.name }}">{{ site.author.name }}</span></h1>
       <p class="subtitle">
         <span id="typed-text" data-phrases="{{ site.description | replace: ' | ', '|' }}"></span><span class="typed-cursor"></span>
       </p>
       <div class="hero-buttons">
-        <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">Read the Blog</a>
-        <a href="{{ '/projects/' | relative_url }}" class="btn btn-outline">See What I'm Building</a>
-        <a href="{{ '/cv/' | relative_url }}" class="btn btn-glass">View CV</a>
+        <a href="{{ '/blog/' | relative_url }}" class="btn btn-primary">> read_blog</a>
+        <a href="{{ '/projects/' | relative_url }}" class="btn btn-outline">> ls ~/projects</a>
       </div>
       <div class="hero-stats">
         <div class="hero-stat">
           <span class="stat-number">{{ site.posts.size }}</span>
-          <span class="stat-label">Posts</span>
+          <span class="stat-label">posts</span>
         </div>
         <div class="hero-stat">
           <span class="stat-number">{{ site.projects.size }}</span>
-          <span class="stat-label">Projects</span>
+          <span class="stat-label">repos</span>
         </div>
         <div class="hero-stat">
           <span class="stat-number">{{ site.data.certs_count | default: '3+' }}</span>
-          <span class="stat-label">Certs</span>
+          <span class="stat-label">flags</span>
         </div>
       </div>
     </div>
@@ -55,8 +53,8 @@ title: Home
 <section class="section">
   <div class="container">
     <div class="section-header fade-in">
-      <h2>Latest from the Blog</h2>
-      <p>Notes, write-ups, and things I've figured out along the way</p>
+      <h2>// recent_logs</h2>
+      <p>Write-ups, breakdowns, and field notes from the trenches</p>
     </div>
 
     <!-- Skeleton -->
@@ -103,24 +101,24 @@ title: Home
   <div class="container">
     <div class="highlight-grid">
       <div class="highlight-card glass fade-in glow-pulse">
-        <span class="icon">🛡️</span>
-        <h4>Learning Notes</h4>
-        <p>Things I'm studying in cybersecurity, forensics, and human rights</p>
+        <span class="icon">�</span>
+        <h4>// notes</h4>
+        <p>What I'm learning in cybersecurity, forensics, and beyond</p>
       </div>
       <div class="highlight-card glass fade-in glow-pulse">
-        <span class="icon">⚡</span>
-        <h4>Projects</h4>
-        <p>Stuff I'm building — security tools, scripts, and experiments</p>
+        <span class="icon">🖥️</span>
+        <h4>// builds</h4>
+        <p>Tools, scripts, exploits, and experiments</p>
       </div>
       <div class="highlight-card glass fade-in glow-pulse">
-        <span class="icon">🎯</span>
-        <h4>Certifications</h4>
-        <p>Certs and courses I've completed or am working through</p>
+        <span class="icon">🏆</span>
+        <h4>// certs</h4>
+        <p>Certifications and courses — completed and in progress</p>
       </div>
       <div class="highlight-card glass fade-in glow-pulse">
-        <span class="icon">📋</span>
-        <h4>CV</h4>
-        <p>Background, skills, and experience — all in one place</p>
+        <span class="icon">👾</span>
+        <h4>// about</h4>
+        <p>Who I am, what drives me, and how to reach me</p>
       </div>
     </div>
   </div>
@@ -134,7 +132,7 @@ title: Home
       <div class="bio-text">
         <p><strong>{{ site.author.name }}</strong></p>
         <p>{{ site.author.bio }}</p>
-        <a href="{{ '/about/' | relative_url }}" class="btn btn-sm btn-outline" style="margin-top:0.5rem;">More about me →</a>
+        <a href="{{ '/about/' | relative_url }}" class="btn btn-sm btn-outline" style="margin-top:0.5rem;">./about --verbose →</a>
       </div>
     </div>
   </div>

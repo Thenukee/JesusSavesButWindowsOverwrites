@@ -353,19 +353,21 @@ p {
 }
 
 .nav-brand {
-  font-size: 1.2rem;
+  font-size: 1.15rem;
   font-weight: 800;
-  color: var(--text-primary);
+  color: var(--accent-green);
   letter-spacing: -0.5px;
   font-family: var(--font-mono);
+  text-shadow: 0 0 10px rgba(97, 255, 131, 0.3);
 }
 
 .nav-brand .brand-dot {
-  color: var(--accent-green);
+  color: var(--accent);
 }
 
 .nav-brand:hover {
-  color: var(--accent);
+  color: var(--accent-green);
+  text-shadow: 0 0 16px rgba(97, 255, 131, 0.5);
 }
 
 .nav-links {
@@ -378,12 +380,13 @@ p {
 .nav-links a {
   display: block;
   padding: 0.45rem 0.85rem;
-  border-radius: var(--radius-sm);
-  font-size: 0.88rem;
+  border-radius: 2px;
+  font-size: 0.85rem;
   font-weight: 500;
   color: var(--text-secondary);
   transition: all var(--transition);
   position: relative;
+  font-family: var(--font-mono);
 }
 
 .nav-links a::after {
@@ -493,11 +496,85 @@ p {
   position: relative;
 }
 
+/* Scanline overlay on the whole page — subtle CRT feel */
+.hero::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 212, 255, 0.015) 2px,
+    rgba(0, 212, 255, 0.015) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
 .hero h1 {
   font-size: clamp(2.2rem, 5.5vw, 3.8rem);
   margin-bottom: 0.75rem;
   letter-spacing: -1.5px;
   font-weight: 800;
+  position: relative;
+  animation: glitch-skew 6s infinite linear alternate-reverse;
+}
+
+/* Glitch text effect on hero heading */
+.hero h1 .gradient-text {
+  position: relative;
+  display: inline-block;
+}
+
+.hero h1 .gradient-text::before,
+.hero h1 .gradient-text::after {
+  content: attr(data-text);
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: var(--gradient-accent);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.hero h1 .gradient-text::before {
+  animation: glitch-1 3s infinite linear alternate-reverse;
+  clip-path: polygon(0 0, 100% 0, 100% 45%, 0 45%);
+  opacity: 0.8;
+}
+
+.hero h1 .gradient-text::after {
+  animation: glitch-2 2.5s infinite linear alternate-reverse;
+  clip-path: polygon(0 55%, 100% 55%, 100% 100%, 0 100%);
+  opacity: 0.8;
+}
+
+@keyframes glitch-1 {
+  0%, 92% { transform: translate(0); }
+  93% { transform: translate(-3px, 1px); }
+  94% { transform: translate(2px, -1px); }
+  95% { transform: translate(-1px, 2px); }
+  96%, 100% { transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0%, 90% { transform: translate(0); }
+  91% { transform: translate(2px, -1px); }
+  92% { transform: translate(-3px, 1px); }
+  93% { transform: translate(1px, -2px); }
+  94%, 100% { transform: translate(0); }
+}
+
+@keyframes glitch-skew {
+  0%, 95% { transform: skew(0deg); }
+  96% { transform: skew(0.4deg); }
+  97% { transform: skew(-0.3deg); }
+  98% { transform: skew(0.2deg); }
+  99%, 100% { transform: skew(0deg); }
 }
 
 .hero .subtitle {
@@ -514,10 +591,11 @@ p {
   display: inline-block;
   width: 2px;
   height: 1.2em;
-  background: var(--accent);
+  background: var(--accent-green);
   margin-left: 2px;
   animation: blink-cursor 0.8s step-end infinite;
   vertical-align: text-bottom;
+  box-shadow: 0 0 6px var(--accent-green), 0 0 12px rgba(97, 255, 131, 0.3);
 }
 
 @keyframes blink-cursor {
@@ -528,20 +606,37 @@ p {
 /* Terminal-style tagline */
 .hero-terminal {
   display: inline-block;
-  background: var(--bg-glass);
+  background: rgba(8, 8, 15, 0.85);
   backdrop-filter: blur(16px);
-  border: 1px solid var(--border-glass);
-  border-radius: var(--radius-sm);
+  border: 1px solid rgba(97, 255, 131, 0.15);
+  border-left: 3px solid var(--accent-green);
+  border-radius: 2px;
   padding: 0.6rem 1.2rem;
   margin-bottom: 2rem;
   font-family: var(--font-mono);
   font-size: 0.88rem;
   color: var(--text-secondary);
+  box-shadow: 0 0 20px rgba(97, 255, 131, 0.06), inset 0 0 30px rgba(0, 0, 0, 0.3);
+  text-shadow: 0 0 4px rgba(97, 255, 131, 0.15);
 }
 
 .hero-terminal .prompt {
   color: var(--accent-green);
-  margin-right: 0.5rem;
+  text-shadow: 0 0 8px rgba(97, 255, 131, 0.5);
+}
+
+.hero-terminal .prompt-sep {
+  color: var(--text-muted);
+}
+
+.hero-terminal .prompt-path {
+  color: var(--accent);
+  text-shadow: 0 0 6px rgba(0, 212, 255, 0.4);
+}
+
+.hero-terminal .prompt-dollar {
+  color: var(--accent-secondary);
+  margin: 0 0.4rem;
 }
 
 .hero-buttons {
@@ -574,14 +669,17 @@ p {
   background-clip: text;
   display: block;
   line-height: 1.2;
+  font-family: var(--font-mono);
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.2);
 }
 
 .hero-stat .stat-label {
-  font-size: 0.78rem;
+  font-size: 0.75rem;
   color: var(--text-muted);
-  text-transform: uppercase;
-  letter-spacing: 1px;
+  text-transform: lowercase;
+  letter-spacing: 1.5px;
   font-weight: 600;
+  font-family: var(--font-mono);
 }
 
 /* ============================================================
@@ -605,8 +703,11 @@ p {
 
 .btn-primary {
   background: var(--gradient-accent);
-  color: #fff;
+  color: #0d0d1a;
+  font-family: var(--font-mono);
+  font-weight: 700;
   box-shadow: 0 4px 20px rgba(0, 212, 255, 0.25);
+  text-transform: lowercase;
 }
 
 .btn-primary:hover {
@@ -637,6 +738,8 @@ p {
   background: transparent;
   color: var(--accent);
   border: 1.5px solid var(--accent);
+  font-family: var(--font-mono);
+  text-transform: lowercase;
 }
 
 .btn-outline:hover {
@@ -666,7 +769,7 @@ p {
 }
 
 /* ============================================================
-   SECTION HEADERS
+   SECTION HEADERS — hacker style
    ============================================================ */
 .section {
   padding: 4.5rem 0;
@@ -679,13 +782,18 @@ p {
 
 .section-header h2 {
   margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  letter-spacing: -0.5px;
+  color: var(--accent-green);
+  text-shadow: 0 0 12px rgba(97, 255, 131, 0.2);
 }
 
 .section-header p {
   max-width: 500px;
   margin: 0 auto;
   color: var(--text-muted);
-  font-size: 0.95rem;
+  font-size: 0.92rem;
+  font-family: var(--font-mono);
 }
 
 /* ============================================================
@@ -721,15 +829,16 @@ p {
 }
 
 .post-card .card-meta .tag {
-  background: var(--accent-glow);
-  color: var(--accent);
+  background: rgba(97, 255, 131, 0.08);
+  color: var(--accent-green);
   padding: 0.2rem 0.65rem;
-  border-radius: 999px;
+  border-radius: 2px;
   font-size: 0.72rem;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.5px;
-  border: 1px solid rgba(0, 212, 255, 0.15);
+  border: 1px solid rgba(97, 255, 131, 0.15);
+  font-family: var(--font-mono);
 }
 
 .post-card h3 {
@@ -781,6 +890,9 @@ p {
 .highlight-card h4 {
   margin-bottom: 0.35rem;
   font-size: 1.05rem;
+  font-family: var(--font-mono);
+  color: var(--accent-green);
+  text-shadow: 0 0 8px rgba(97, 255, 131, 0.15);
 }
 
 .highlight-card p {
@@ -1553,6 +1665,9 @@ p {
 
 .page-header h1 {
   margin-bottom: 0.5rem;
+  font-family: var(--font-mono);
+  font-size: clamp(1.8rem, 4vw, 2.6rem);
+  letter-spacing: -0.5px;
 }
 
 .page-header p {
@@ -1560,7 +1675,7 @@ p {
   margin: 0 auto;
   color: var(--text-muted);
   font-family: var(--font-mono);
-  font-size: 0.95rem;
+  font-size: 0.88rem;
 }
 
 /* ============================================================
@@ -1624,11 +1739,50 @@ p {
 
 @keyframes glow-pulse {
   0%, 100% { box-shadow: 0 0 5px var(--accent-glow); }
-  50% { box-shadow: 0 0 25px var(--accent-glow-strong); }
+  50% { box-shadow: 0 0 25px var(--accent-glow-strong), 0 0 40px rgba(97, 255, 131, 0.08); }
 }
 
 .glow-pulse {
   animation: glow-pulse 3s ease-in-out infinite;
+}
+
+/* Neon text glow utility */
+.neon-green {
+  color: var(--accent-green);
+  text-shadow: 0 0 8px rgba(97, 255, 131, 0.5), 0 0 20px rgba(97, 255, 131, 0.2);
+}
+
+.neon-cyan {
+  color: var(--accent);
+  text-shadow: 0 0 8px rgba(0, 212, 255, 0.5), 0 0 20px rgba(0, 212, 255, 0.2);
+}
+
+/* Flicker animation for random elements */
+@keyframes flicker {
+  0%, 19.999%, 22%, 62.999%, 64%, 64.999%, 72%, 100% { opacity: 1; }
+  20%, 21.999%, 63%, 63.999%, 65%, 69.999% { opacity: 0.33; }
+}
+
+.flicker {
+  animation: flicker 5s linear infinite;
+}
+
+/* Terminal block — reusable block quote style */
+.terminal-block {
+  background: rgba(8, 8, 15, 0.9);
+  border-left: 3px solid var(--accent-green);
+  border-radius: 2px;
+  padding: 1rem 1.25rem;
+  font-family: var(--font-mono);
+  font-size: 0.88rem;
+  color: var(--accent-green);
+  margin: 1.5rem 0;
+  box-shadow: 0 0 20px rgba(97, 255, 131, 0.05);
+}
+
+/* Page header hacker treatment */
+.page-header h1 .gradient-text {
+  text-shadow: 0 0 20px rgba(0, 212, 255, 0.15);
 }
 
 /* ============================================================
