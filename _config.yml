@@ -2,9 +2,7 @@
 title: "Lean Beef Patty"
 description: "Peace & Conflict Studies | Cybersecurity | Research & Writing"
 url: "https://yourusername.github.io"
-# Set baseurl to your repo name for GitHub Pages project sites (e.g. "/JesusSavesButWindowsOverwrites")
-# Leave empty ("") for local testing or if deploying to a custom domain / user site
-baseurl: ""
+baseurl: "/JesusSavesButWindowsOverwrites"
 author:
   name: "Lean Beef Patty"
   email: "your.email@example.com"
