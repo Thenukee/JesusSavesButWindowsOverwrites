@@ -102,7 +102,7 @@
             }
           }
 
-          // Mouse interaction
+          // Mouse interaction — green glow lines
           if (mouse.x !== null) {
             const dx = p.x - mouse.x;
             const dy = p.y - mouse.y;
@@ -111,7 +111,7 @@
               ctx.beginPath();
               ctx.moveTo(p.x, p.y);
               ctx.lineTo(mouse.x, mouse.y);
-              ctx.strokeStyle = isDark ? 'rgba(168, 85, 247, 0.15)' : 'rgba(168, 85, 247, 0.08)';
+              ctx.strokeStyle = isDark ? 'rgba(97, 255, 131, 0.18)' : 'rgba(97, 255, 131, 0.1)';
               ctx.lineWidth = 0.5;
               ctx.stroke();
             }
@@ -228,7 +228,8 @@
       const href = link.getAttribute('href');
       if (!href) return;
       const normalised = href.replace(/\/$/, '') || '/';
-      if (currentPath === normalised || (normalised !== '/' && currentPath.startsWith(normalised))) {
+      // Exact match, or sub-page match (must have trailing slash to avoid partial prefix)
+      if (currentPath === normalised || (normalised !== '/' && normalised !== currentPath && currentPath.startsWith(normalised + '/'))) {
         link.classList.add('active');
       }
     });

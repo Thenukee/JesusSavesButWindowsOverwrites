@@ -13,11 +13,14 @@
   --text-muted: #7a7a99;
   --accent: #00d4ff;
   --accent-secondary: #a855f7;
+  --accent-green: #61ff83;
   --accent-light: #38e8ff;
   --accent-glow: rgba(0, 212, 255, 0.18);
   --accent-glow-strong: rgba(0, 212, 255, 0.35);
-  --gradient-accent: linear-gradient(135deg, #00d4ff, #a855f7);
-  --gradient-accent-text: linear-gradient(135deg, #00d4ff, #a855f7);
+  --accent-green-glow: rgba(97, 255, 131, 0.2);
+  --gradient-accent: linear-gradient(135deg, #00d4ff, #61ff83);
+  --gradient-accent-text: linear-gradient(135deg, #00d4ff, #61ff83);
+  --gradient-accent-alt: linear-gradient(135deg, #61ff83, #00d4ff, #a855f7);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.06);
   --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.08);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.12);
@@ -48,10 +51,13 @@
   --text-muted: #5a5a7a;
   --accent: #00d4ff;
   --accent-secondary: #a855f7;
+  --accent-green: #61ff83;
   --accent-light: #38e8ff;
   --accent-glow: rgba(0, 212, 255, 0.12);
   --accent-glow-strong: rgba(0, 212, 255, 0.3);
-  --gradient-accent: linear-gradient(135deg, #00d4ff, #a855f7);
+  --accent-green-glow: rgba(97, 255, 131, 0.15);
+  --gradient-accent: linear-gradient(135deg, #00d4ff, #61ff83);
+  --gradient-accent-alt: linear-gradient(135deg, #61ff83, #00d4ff, #a855f7);
   --shadow-sm: 0 2px 8px rgba(0, 0, 0, 0.4);
   --shadow-md: 0 4px 24px rgba(0, 0, 0, 0.5);
   --shadow-lg: 0 8px 40px rgba(0, 0, 0, 0.6);
@@ -355,7 +361,7 @@ p {
 }
 
 .nav-brand .brand-dot {
-  color: var(--accent);
+  color: var(--accent-green);
 }
 
 .nav-brand:hover {
@@ -403,29 +409,35 @@ p {
   width: 60%;
 }
 
-/* Dark mode toggle */
+/* Dark mode toggle — fixed bottom-right */
 .theme-toggle {
-  border: none;
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  z-index: 999;
+  border: 1px solid var(--border-glass);
   background: var(--bg-glass);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
   color: var(--text-primary);
-  width: 38px;
-  height: 38px;
+  width: 44px;
+  height: 44px;
   border-radius: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  font-size: 1.1rem;
+  font-size: 1.15rem;
   transition: all var(--transition);
-  margin-left: 0.5rem;
-  border: 1px solid var(--border-glass);
+  box-shadow: var(--shadow-md);
 }
 
 .theme-toggle:hover {
-  background: var(--accent);
-  color: #fff;
-  transform: rotate(20deg) scale(1.1);
-  box-shadow: 0 0 20px var(--accent-glow-strong);
+  background: var(--accent-green);
+  color: #0d0d1a;
+  transform: scale(1.15) rotate(20deg);
+  box-shadow: 0 0 24px var(--accent-green-glow);
+  border-color: var(--accent-green);
 }
 
 /* Mobile menu toggle */
@@ -528,7 +540,7 @@ p {
 }
 
 .hero-terminal .prompt {
-  color: var(--accent);
+  color: var(--accent-green);
   margin-right: 0.5rem;
 }
 
@@ -874,10 +886,10 @@ p {
   width: 14px;
   height: 14px;
   border-radius: 50%;
-  background: var(--accent);
+  background: var(--accent-green);
   border: 3px solid var(--bg-primary);
   z-index: 1;
-  box-shadow: 0 0 10px var(--accent-glow-strong);
+  box-shadow: 0 0 10px var(--accent-green-glow);
 }
 
 .timeline-item .year {
@@ -1631,25 +1643,25 @@ p {
 }
 
 ::-webkit-scrollbar-thumb {
-  background: linear-gradient(180deg, var(--accent), var(--accent-secondary));
+  background: linear-gradient(180deg, var(--accent), var(--accent-green));
   border-radius: 4px;
 }
 
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent-light);
+  background: var(--accent-green);
 }
 
 /* ============================================================
    SELECTION
    ============================================================ */
 ::selection {
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent-green);
+  color: #0d0d1a;
 }
 
 ::-moz-selection {
-  background: var(--accent);
-  color: #fff;
+  background: var(--accent-green);
+  color: #0d0d1a;
 }
 
 /* ============================================================
