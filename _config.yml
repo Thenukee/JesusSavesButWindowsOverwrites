@@ -6,7 +6,7 @@ baseurl: "/JesusSavesButWindowsOverwrites" # e.g. /repo-name if hosted under a p
 author:
   name: "LeanBeefPattyGoneDark"
   email: "your.email@example.com"
-  bio: "Researcher, writer, and cybersecurity enthusiast passionate about peace & conflict studies. Currently studying at KDU, building tools, and sharing what I learn."
+  bio: "CS undergrad at KDU. I write about what I'm learning in cybersecurity, Windows forensics, and human rights. This site is my public notebook — and a place recruiters can check out what I've been up to."
   avatar: "/assets/img/avatar.png"
   location: "Sri Lanka"
   linkedin: "https://linkedin.com/in/yourprofile"

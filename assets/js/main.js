@@ -221,15 +221,24 @@
     }
 
     // -----------------------------------------------------------
-    // ACTIVE NAV LINK
+    // ACTIVE NAV LINK — accounts for baseurl prefix
     // -----------------------------------------------------------
-    const currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    var brandEl = document.querySelector('.nav-brand');
+    var basePath = brandEl ? brandEl.getAttribute('href').replace(/\/$/, '') : '';
+    var currentPath = window.location.pathname.replace(/\/$/, '') || '/';
+    // Strip the baseurl from the current path to get the page-level path
+    var relCurrent = basePath ? currentPath.replace(basePath, '') : currentPath;
+    if (!relCurrent || relCurrent === '') relCurrent = '/';
+
     document.querySelectorAll('.nav-links a').forEach(function (link) {
-      const href = link.getAttribute('href');
+      var href = link.getAttribute('href');
       if (!href) return;
-      const normalised = href.replace(/\/$/, '') || '/';
-      // Exact match, or sub-page match (must have trailing slash to avoid partial prefix)
-      if (currentPath === normalised || (normalised !== '/' && normalised !== currentPath && currentPath.startsWith(normalised + '/'))) {
+      var normalised = href.replace(/\/$/, '') || '/';
+      var relLink = basePath ? normalised.replace(basePath, '') : normalised;
+      if (!relLink || relLink === '') relLink = '/';
+
+      // Exact match, or sub-page match (e.g. /blog matches /blog/some-post)
+      if (relCurrent === relLink || (relLink !== '/' && relCurrent.startsWith(relLink + '/'))) {
         link.classList.add('active');
       }
     });
