@@ -1,29 +1,35 @@
 ---
 layout: default
 ---
-<article class="project-page">
-  <header class="project-header">
+<div class="container">
+  <header class="page-header">
     <h1>{{ page.title }}</h1>
-    <p class="project-tagline">{{ page.tagline }}</p>
-    <div class="project-links">
-      {% if page.github %}<a href="{{ page.github }}" class="btn btn-outline" target="_blank">GitHub</a>{% endif %}
-      {% if page.demo %}<a href="{{ page.demo }}" class="btn btn-primary" target="_blank">Live Demo</a>{% endif %}
-      {% if page.writeup %}<a href="{{ page.writeup | relative_url }}" class="btn btn-outline">Write-up</a>{% endif %}
-    </div>
+    <p>{{ page.purpose }}</p>
   </header>
 
-  {% if page.tech %}
-  <div class="tech-stack">
-    <h3>Tech Stack</h3>
-    <div class="tech-tags">
+  <div class="project-detail" style="max-width: 750px; margin: 0 auto;">
+    {% if page.tech %}
+    <div style="margin-bottom: 1.5rem;">
       {% for t in page.tech %}
-      <span class="tech-tag">{{ t }}</span>
+      <span class="tech-chip" style="display: inline-block; font-size: 0.75rem; padding: 0.2rem 0.6rem; background: var(--accent-glow); color: var(--accent); border-radius: 999px; font-weight: 600; margin-right: 0.4rem; margin-bottom: 0.4rem;">{{ t }}</span>
       {% endfor %}
     </div>
-  </div>
-  {% endif %}
+    {% endif %}
 
-  <div class="project-content">
-    {{ content }}
+    <div class="post-content">
+      {{ content }}
+    </div>
+
+    <div style="margin-top: 2rem; display: flex; gap: 1rem; flex-wrap: wrap;">
+      {% if page.github %}
+      <a href="{{ page.github }}" target="_blank" class="btn btn-outline btn-sm">GitHub →</a>
+      {% endif %}
+      {% if page.demo %}
+      <a href="{{ page.demo }}" target="_blank" class="btn btn-primary btn-sm">Live Demo →</a>
+      {% endif %}
+      {% if page.writeup %}
+      <a href="{{ page.writeup }}" class="btn btn-glass btn-sm">Write-up →</a>
+      {% endif %}
+    </div>
   </div>
-</article>
+</div>

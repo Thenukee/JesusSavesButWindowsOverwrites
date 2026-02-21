@@ -1,16 +1,17 @@
 # Site settings
-title: "Lean Beef Patty"
-description: "Peace & Conflict Studies | Cybersecurity | Research & Writing"
-url: "https://yourusername.github.io"
-baseurl: "/JesusSavesButWindowsOverwrites"
+title: "Thenuke Wijesinghe"
+description: "Human Rights | Cybersecurity | Windows Forensics "
+url: "https://thenukee.github.io" # e.g. https://yourusername.github.io
+baseurl: "/JesusSavesButWindowsOverwrites" # e.g. /repo-name if hosted under a project
 author:
-  name: "Lean Beef Patty"
+  name: "LeanBeefPattyGoneDark"
   email: "your.email@example.com"
-  bio: "Researcher and writer exploring the intersections of peace & conflict studies, cybersecurity, and technology. Currently pursuing studies at KDU, building tools, and documenting the journey."
-  avatar: "/assets/images/avatar.png"
+  bio: "Researcher, writer, and cybersecurity enthusiast passionate about peace & conflict studies. Currently studying at KDU, building tools, and sharing what I learn."
+  avatar: "/assets/img/avatar.png"
+  location: "Sri Lanka"
   linkedin: "https://linkedin.com/in/yourprofile"
   github: "https://github.com/yourusername"
-  scholar: "https://scholar.google.com/citations?user=YOURID"
+  scholar: ""
 
 # Build settings
 markdown: kramdown
@@ -23,12 +24,6 @@ collections:
     output: true
     permalink: /projects/:title/
 
-# Pagination (requires jekyll-paginate)
-plugins:
-  - jekyll-feed
-  - jekyll-seo-tag
-  - jekyll-sitemap
-
 # Defaults
 defaults:
   - scope:
@@ -36,20 +31,23 @@ defaults:
       type: "posts"
     values:
       layout: "post"
-      author: "Lean Beef Patty"
+      comments: true
   - scope:
       path: ""
       type: "projects"
     values:
       layout: "project"
-  - scope:
-      path: ""
-    values:
-      layout: "default"
 
-# Exclude from build
+# Plugins
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Exclude
 exclude:
   - Gemfile
   - Gemfile.lock
+  - node_modules
   - README.md
   - LICENSE
