@@ -1,0 +1,94 @@
+---
+layout: default
+---
+<article class="post-full">
+  <header class="post-header">
+    <div class="post-meta">
+      <time datetime="{{ page.date | date_to_xmlschema }}">{{ page.date | date: "%B %d, %Y" }}</time>
+      <span class="reading-time" id="reading-time"></span>
+    </div>
+    <h1 class="post-title">{{ page.title }}</h1>
+    {% if page.tags.size > 0 %}
+    <div class="post-tags">
+      {% for tag in page.tags %}
+      <a href="{{ '/blog/' | relative_url }}?tag={{ tag | slugify }}" class="tag">{{ tag }}</a>
+      {% endfor %}
+    </div>
+    {% endif %}
+  </header>
+
+  {% if page.toc %}
+  <nav class="table-of-contents" id="toc">
+    <h3>Table of Contents</h3>
+    <div id="toc-content"></div>
+  </nav>
+  {% endif %}
+
+  <div class="post-content" id="post-content">
+    {{ content }}
+  </div>
+
+  <footer class="post-footer">
+    <!-- Author Box -->
+    <div class="author-box">
+      <div class="author-info">
+        <strong>{{ site.author.name }}</strong>
+        <p>{{ site.author.bio }}</p>
+      </div>
+    </div>
+
+    <!-- Related Posts -->
+    {% assign related = site.posts | where_exp: "post", "post.url != page.url" %}
+    {% assign related_posts = "" | split: "" %}
+    {% for tag in page.tags %}
+      {% assign tagged = related | where_exp: "post", "post.tags contains tag" %}
+      {% for post in tagged %}
+        {% unless related_posts contains post %}
+          {% assign related_posts = related_posts | push: post %}
+        {% endunless %}
+      {% endfor %}
+    {% endfor %}
+
+    {% if related_posts.size > 0 %}
+    <div class="related-posts">
+      <h3>If you liked this, you might also enjoy...</h3>
+      <div class="related-grid">
+        {% for post in related_posts limit:3 %}
+        <a href="{{ post.url | relative_url }}" class="related-card">
+          <h4>{{ post.title }}</h4>
+          <time>{{ post.date | date: "%B %d, %Y" }}</time>
+        </a>
+        {% endfor %}
+      </div>
+    </div>
+    {% endif %}
+  </footer>
+</article>
+
+<script>
+  // Calculate reading time
+  (function() {
+    const content = document.getElementById('post-content');
+    const words = content.innerText.split(/\s+/).length;
+    const minutes = Math.ceil(words / 200);
+    document.getElementById('reading-time').textContent = minutes + ' min read';
+  })();
+
+  // Generate TOC
+  (function() {
+    const tocEl = document.getElementById('toc-content');
+    if (!tocEl) return;
+    const content = document.getElementById('post-content');
+    const headings = content.querySelectorAll('h2, h3');
+    if (headings.length === 0) { document.getElementById('toc').style.display = 'none'; return; }
+    let html = '<ul>';
+    headings.forEach(function(h, i) {
+      const id = 'heading-' + i;
+      h.id = id;
+      const indent = h.tagName === 'H3' ? ' class="toc-sub"' : '';
+      html += '<li' + indent + '><a href="#' + id + '">' + h.textContent + '</a></li>';
+    });
+    html += '</ul>';
+    tocEl.innerHTML = html;
+  })();
+</script>

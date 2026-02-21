@@ -1,0 +1,85 @@
+---
+layout: default
+title: Projects
+description: A portfolio of tools, research projects, and experiments.
+permalink: /projects/
+---
+
+<section class="section">
+  <div class="container">
+    <header class="page-header">
+      <h1>Projects</h1>
+      <p class="page-description">Tools, research projects, and experiments I've built.</p>
+    </header>
+
+    <div class="cards-grid">
+      {% for project in site.projects %}
+      <div class="project-card">
+        <h3>{{ project.title }}</h3>
+        <p class="tagline">{{ project.tagline }}</p>
+        {% if project.tech %}
+        <div class="tech-tags">
+          {% for t in project.tech %}
+          <span class="tech-tag">{{ t }}</span>
+          {% endfor %}
+        </div>
+        {% endif %}
+        <p class="card-summary">{{ project.description }}</p>
+        <div class="project-links">
+          {% if project.github %}<a href="{{ project.github }}" class="btn btn-sm btn-outline" target="_blank">GitHub</a>{% endif %}
+          {% if project.demo %}<a href="{{ project.demo }}" class="btn btn-sm btn-primary" target="_blank">Demo</a>{% endif %}
+          <a href="{{ project.url | relative_url }}" class="btn btn-sm btn-outline">Details →</a>
+        </div>
+      </div>
+      {% endfor %}
+
+      {% if site.projects.size == 0 %}
+      <!-- Placeholder projects when collection is empty -->
+      <div class="project-card">
+        <h3>Log Correlation Engine</h3>
+        <p class="tagline">Automated security log analysis and threat detection</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Elasticsearch</span>
+          <span class="tech-tag">SIEM</span>
+        </div>
+        <p class="card-summary">A tool that correlates security events across multiple log sources to identify complex attack patterns and reduce alert fatigue.</p>
+        <div class="project-links">
+          <a href="#" class="btn btn-sm btn-outline">GitHub</a>
+          <a href="#" class="btn btn-sm btn-outline">Details →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>File Integrity Verifier</h3>
+        <p class="tagline">Cryptographic file integrity monitoring tool</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">SHA-256</span>
+          <span class="tech-tag">File Systems</span>
+        </div>
+        <p class="card-summary">Monitors critical system files for unauthorized changes using cryptographic hashing, with alerting and reporting capabilities.</p>
+        <div class="project-links">
+          <a href="#" class="btn btn-sm btn-outline">GitHub</a>
+          <a href="#" class="btn btn-sm btn-outline">Details →</a>
+        </div>
+      </div>
+
+      <div class="project-card">
+        <h3>Network Traffic Analyzer</h3>
+        <p class="tagline">Packet capture and protocol analysis dashboard</p>
+        <div class="tech-tags">
+          <span class="tech-tag">Python</span>
+          <span class="tech-tag">Scapy</span>
+          <span class="tech-tag">Wireshark</span>
+        </div>
+        <p class="card-summary">Captures and analyzes network traffic to identify anomalies, suspicious patterns, and potential security threats in real-time.</p>
+        <div class="project-links">
+          <a href="#" class="btn btn-sm btn-outline">GitHub</a>
+          <a href="#" class="btn btn-sm btn-outline">Details →</a>
+        </div>
+      </div>
+      {% endif %}
+    </div>
+  </div>
+</section>

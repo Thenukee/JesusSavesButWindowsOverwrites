@@ -1,0 +1,57 @@
+# Site settings
+title: "Lean Beef Patty"
+description: "Peace & Conflict Studies | Cybersecurity | Research & Writing"
+url: "https://yourusername.github.io"
+# Set baseurl to your repo name for GitHub Pages project sites (e.g. "/JesusSavesButWindowsOverwrites")
+# Leave empty ("") for local testing or if deploying to a custom domain / user site
+baseurl: ""
+author:
+  name: "Lean Beef Patty"
+  email: "your.email@example.com"
+  bio: "Researcher and writer exploring the intersections of peace & conflict studies, cybersecurity, and technology. Currently pursuing studies at KDU, building tools, and documenting the journey."
+  avatar: "/assets/images/avatar.png"
+  linkedin: "https://linkedin.com/in/yourprofile"
+  github: "https://github.com/yourusername"
+  scholar: "https://scholar.google.com/citations?user=YOURID"
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+permalink: /blog/:year/:month/:day/:title/
+
+# Collections
+collections:
+  projects:
+    output: true
+    permalink: /projects/:title/
+
+# Pagination (requires jekyll-paginate)
+plugins:
+  - jekyll-feed
+  - jekyll-seo-tag
+  - jekyll-sitemap
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+      author: "Lean Beef Patty"
+  - scope:
+      path: ""
+      type: "projects"
+    values:
+      layout: "project"
+  - scope:
+      path: ""
+    values:
+      layout: "default"
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - LICENSE
