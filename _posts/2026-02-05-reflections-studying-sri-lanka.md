@@ -10,7 +10,7 @@ Studying at the General Sir John Kotelawala Defence University has been a unique
 
 ## The Environment
 
-KDU is unlike typical universities. The discipline, structure, and focus on national relevance shape everything — from how courses are designed to the expectations placed on students. It's challenging, but it builds resilience.
+KDU is unlike typical universities. The discipline, structure, and focus on national relevance shape everything — from how courses are designed to the expectations placed on students. It's challenging, but it builds resilience.Beyond academics, I've also been fortunate to meet the love of my life here — a reminder that university is about more than just studies. It also included doing bad things like sneaking in the fire exit and .,,, but those are stories for another time.
 
 ## Finding My Path
 
