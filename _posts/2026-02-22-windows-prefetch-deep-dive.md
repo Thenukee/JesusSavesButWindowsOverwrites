@@ -14,7 +14,7 @@ Prefetch files are typically located in the `C:\Windows\Prefetch` directory. To 
 - **Command Line**: Use commands like `copy` or `xcopy` to transfer the files to a different location for analysis.
 - **Forensic Tools**: Tools like FTK Imager or EnCase can be used to create a forensic image of the prefetch directory, allowing for more comprehensive analysis.
 
-![Prefetch Folder](assets/images/prefetch/prefetch_folder.png)
+![Prefetch Folder]({{ '/assets/images/prefetch/prefetch_folder.png' | relative_url }})
 
 ## Prefetch File Structure
 Prefetch files have a specific structure that contains various pieces of information about application execution. Here's a breakdown of the key components:
