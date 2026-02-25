@@ -23,7 +23,7 @@ Once you have extracted the prefetch files, you can analyze them using tools lik
 3. **Timeline Analysis**: Use the last execution time to create a timeline of application usage, which can help reconstruct user activity and identify patterns.
 4. **Correlate with Other Artifacts**: Cross-reference prefetch data with other forensic artifacts such as event logs, registry entries, or network traffic to build a more comprehensive picture of system activity.   
 
-In this deep dive, we'll be using Eric Zimmerman's PECmd.exe tool to parse prefetch files and extract valuable information for our forensic analysis. PECmd provides a command-line interface for analyzing prefetch files, allowing us to automate the extraction of key data points such as application names, execution counts, and file access lists. You can download PECmd from Eric Zimmerman's GitHub repository: [PECmd]('https://github.com/EricZimmerman/PECmd').
+In this deep dive, we'll be using Eric Zimmerman's PECmd.exe tool to parse prefetch files and extract valuable information for our forensic analysis. PECmd provides a command-line interface for analyzing prefetch files, allowing us to automate the extraction of key data points such as application names, execution counts, and file access lists. You can download PECmd from Eric Zimmerman's GitHub repository: [PECmd](https://github.com/EricZimmerman/PECmd).
 
 ## Prefetch File Structure
 Prefetch files have a specific structure that contains various pieces of information about application execution. Here's a breakdown of the key components:
